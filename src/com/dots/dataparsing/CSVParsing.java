@@ -51,7 +51,7 @@ public class CSVParsing {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
             int i = 1;
             List<String> lineNames = new ArrayList<>();
-            List<String> lineValues = new ArrayList<>();
+            //List<String> lineValues = new ArrayList<>();
             List<List<String>> lines = new ArrayList<>();
 
             while (((line = br.readLine()) != null) && (i !=100)) {
@@ -62,15 +62,13 @@ public class CSVParsing {
                         lineNames.add(lineNamesArray[j]);
                     }
                 } else {
-                    lineValues.clear();
+                    // lineValues.clear();
+                    List<String> lineValues = new ArrayList<>();
                     for (int j = 0; j <= lineString.length - 1; j++) {
                         lineValues.add(lineString[j]);
                     }
-
                     lines.add(lineValues);
-                   // lines.add(i-2, lineValues);
-                    System.out.println(lines);
-                }
+                 }
                 d.setHeader(lineNames);
                 d.setContent(lines);
                 i++;
