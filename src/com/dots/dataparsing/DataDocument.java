@@ -1,7 +1,15 @@
 package com.dots.dataparsing;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 
 /**
  * Created by oleksandrd on 7/5/2018.
@@ -52,5 +60,87 @@ public class DataDocument {
 
         }
         lineCounter++;
+    }
+
+    public void dataDocumentToCSV(String csvFile, String cvsSplitBy, Boolean firstLineNames){
+        List<String> lineNames = this.header;
+        List<List<String>> lines = this.content;
+        boolean first =true;
+        try {
+            FileWriter writer = new FileWriter(csvFile);
+
+            if (firstLineNames) {
+                first = true;
+                StringBuilder sb = new StringBuilder();
+                for (String value : lineNames) {
+                    if (!first) {
+                        sb.append(cvsSplitBy);
+                    }
+                    sb.append(value);
+                    first = false;
+                }
+                sb.append("\n");
+                writer.append(sb.toString());
+            }
+
+            for (List<String> listLines : lines){
+                first = true;
+                StringBuilder sb = new StringBuilder();
+                for (String value: listLines){
+                    if (!first) {
+                        sb.append(cvsSplitBy);
+                    }
+                    sb.append(value);
+                    first = false;
+                }
+                sb.append("\n");
+                writer.append(sb.toString());
+            }
+
+            writer.flush();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dataDocumentToXls(String excelFile, Boolean firstLineNames){
+        List<String> lineNames = this.header;
+        List<List<String>> lines = this.content;
+        boolean first =true;
+        try {
+            HSSFWorkbook hwb = new HSSFWorkbook();
+            HSSFSheet sheet = hwb.createSheet("data");
+
+            if (firstLineNames) {
+                HSSFRow row = sheet.createRow(0);
+                int i = 0; //counter for columns in Excel
+                for (String value : lineNames) {
+                    HSSFCell cell = row.createCell(i);
+                    cell.setCellValue(value);
+                    i++;
+                }
+            }
+
+            int j=1; //counter for rows in Excel
+            for (List<String> listLines : lines){
+                HSSFRow row = sheet.createRow(j);
+                int i = 0; //counter for columns in Excel
+                for (String value: listLines){
+                    HSSFCell cell = row.createCell(i);
+                    cell.setCellValue(value);
+                    i++;
+                }
+                j++;
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(excelFile);
+            hwb.write(fileOut);
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
