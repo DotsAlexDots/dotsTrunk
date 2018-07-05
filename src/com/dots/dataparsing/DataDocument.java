@@ -9,6 +9,10 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 
 
 /**
@@ -129,6 +133,44 @@ public class DataDocument {
                 int i = 0; //counter for columns in Excel
                 for (String value: listLines){
                     HSSFCell cell = row.createCell(i);
+                    cell.setCellValue(value);
+                    i++;
+                }
+                j++;
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(excelFile);
+            hwb.write(fileOut);
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dataDocumentToXlsx(String excelFile, Boolean firstLineNames){
+        List<String> lineNames = this.header;
+        List<List<String>> lines = this.content;
+        try {
+            XSSFWorkbook hwb = new XSSFWorkbook();
+            XSSFSheet sheet = hwb.createSheet("data");
+
+            if (firstLineNames) {
+                XSSFRow row = sheet.createRow(0);
+                int i = 0; //counter for columns in Excel
+                for (String value : lineNames) {
+                    XSSFCell cell = row.createCell(i);
+                    cell.setCellValue(value);
+                    i++;
+                }
+            }
+
+            int j=1; //counter for rows in Excel
+            for (List<String> listLines : lines){
+                XSSFRow row = sheet.createRow(j);
+                int i = 0; //counter for columns in Excel
+                for (String value: listLines){
+                    XSSFCell cell = row.createCell(i);
                     cell.setCellValue(value);
                     i++;
                 }

@@ -11,7 +11,8 @@ public class Main {
         //p1.csvReadToScreen("C://My/SacramentocrimeJanuary2006.csv", ",", true);
         DataDocument d = p1.csvReadToList("C://My/SacramentocrimeJanuary2006.csv", ",", true);
         d.dataDocumentToScreen();
-       // d.dataDocumentToCSV("C://My/1.csv", ",", true);
-        d.dataDocumentToXls("C://My/1.xls", true);
+        // d.dataDocumentToCSV("C://My/1.csv", ",", true);
+        //d.dataDocumentToXls("C://My/1.xls", true);
+        d.dataDocumentToXlsx("C://My/1.xlsx", true);
     }
 }
