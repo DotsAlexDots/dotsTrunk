@@ -54,7 +54,7 @@ public class CSVParsing {
             //List<String> lineValues = new ArrayList<>();
             List<List<String>> lines = new ArrayList<>();
 
-            while (((line = br.readLine()) != null) && (i !=100)) {
+            while (((line = br.readLine()) != null)) {
                 String[] lineString = line.split(cvsSplitBy);
                 if (firstLineNames && i == 1) {
                     String[] lineNamesArray = lineString;
@@ -78,5 +78,7 @@ public class CSVParsing {
         }
         return d;
     }
+
+
 
 }

@@ -185,4 +185,31 @@ public class DataDocument {
             e.printStackTrace();
         }
     }
+
+    public DataDocument dataConvertEarthquaqe(DataDocument d) {
+        DataDocument dNew = new DataDocument();
+
+        List<String> lineNames = d.getHeader();
+        List<List<String>> lines = d.getContent();
+
+        int i = 0; //counter for columns in Excel
+        for (String valueName: lineNames){
+
+            if ((valueName != "time") || (valueName != "latitude") || (valueName != "longitude")
+                    || (valueName != "depth") || (valueName != "mag") || (valueName != "place")) {
+
+                lineNames.remove(i);
+                for (List<String> listLines : lines) {
+                    listLines.remove(i);
+                }
+               i--;
+            }
+            i++;
+        }
+
+        dNew.setContent(lines);
+        dNew.setHeader(lineNames);
+        return dNew;
+    }
+
 }
