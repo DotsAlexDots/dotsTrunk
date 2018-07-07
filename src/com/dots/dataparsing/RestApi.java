@@ -5,10 +5,11 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.URL;
+import static java.lang.System.*;
 
 public class RestApi {
 
-    public void getRestQuery(String urlLink, String pathToFile){
+    public void getRestQuery(String urlLink, String pathToFile, String typeOfFile){
         try {
             FileWriter writer = new FileWriter(pathToFile);
             URL url = new URL(urlLink);
@@ -26,13 +27,10 @@ public class RestApi {
 
 
             while ((output = br.readLine()) != null) {
-                //StringBuilder sb = new StringBuilder();
-               // sb.append(output);
-               // sb.append("\n");
-               // writer.append(sb.toString());
                 writer.append(output);
-                writer.write(System.lineSeparator());
-                System.out.println(output);
+                if (typeOfFile == "csv")
+                {writer.write(lineSeparator());}
+               // System.out.println(output);
 
             }
 

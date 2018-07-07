@@ -15,9 +15,6 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 
 
-/**
- * Created by oleksandrd on 7/5/2018.
- */
 public class DataDocument {
     private List<String> header;
     private List<List<String>> content;
@@ -186,30 +183,6 @@ public class DataDocument {
         }
     }
 
-    public DataDocument dataConvertEarthquaqe(DataDocument d) {
-        DataDocument dNew = new DataDocument();
 
-        List<String> lineNames = d.getHeader();
-        List<List<String>> lines = d.getContent();
-
-        int i = 0; //counter for columns in Excel
-        for (String valueName: lineNames){
-
-            if ((valueName != "time") || (valueName != "latitude") || (valueName != "longitude")
-                    || (valueName != "depth") || (valueName != "mag") || (valueName != "place")) {
-
-                lineNames.remove(i);
-                for (List<String> listLines : lines) {
-                    listLines.remove(i);
-                }
-               i--;
-            }
-            i++;
-        }
-
-        dNew.setContent(lines);
-        dNew.setHeader(lineNames);
-        return dNew;
-    }
 
 }
